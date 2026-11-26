@@ -17,7 +17,7 @@
             <div v-reveal="140" class="flex items-center gap-3 mb-6 h-8">
               <span class="divider-accent" />
               <transition name="role" mode="out-in">
-                <p :key="roleIndex" class="font-mono text-sm sm:text-base font-bold uppercase tracking-[0.16em] text-muted">{{ roles[roleIndex] }}</p>
+                <p :key="roleIndex" class="font-mono text-sm  font-bold uppercase tracking-[0.16em] text-muted">{{ roles[roleIndex] }}</p>
               </transition>
             </div>
 
