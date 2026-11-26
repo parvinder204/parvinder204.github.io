@@ -1,92 +1,55 @@
 # Parvinder Singh — Portfolio
 
-> Personal developer portfolio built with **Vue 3 + Vite + Tailwind CSS**
+Personal developer portfolio built with **Vue 3 + Vite + Tailwind CSS**.
 
-🔗 **Live:** [parvinder204.github.io/portfolio](https://parvinder204.github.io/portfolio)
+## Features
 
----
+- **Brand palette** — Floral White `#fffcf2`, Silver `#ccc5b9`, Charcoal Brown `#403d39`, Carbon Black `#252422`, Spicy Paprika `#eb5e28`
+- **Dark / light theme** with a toggle (remembers the choice, follows the system by default)
+- **Glassmorphism** — frosted cards, floating glass navbar, cursor-follow spotlight, ambient blurred backdrop
+- **Fully responsive** — fluid root font size, `clamp()`-based headings and buttons, tables that stack into cards on phones
+- **Blog** — searchable / filterable articles on AI, Python, neural networks and data science, with table of contents and copy-able code blocks
+- **Merged sections** — Education lives in *About*; Projects + Services live together in *Work*
+- Hash routing (GitHub Pages compatible), scroll-reveal animations, reading-progress bar, accessible focus states, reduced-motion support
 
-## ✨ Features
-
-- ⚡ **Vue 3 + Vite** — lightning-fast HMR and build
-- 🎨 **Tailwind CSS** — utility-first, fully responsive
-- 🌓 **Black & Gold theme** — ink black with warm gold accents
-- 📱 **Mobile-first** responsive design
-- 🔀 **Vue Router** with hash history (GitHub Pages compatible)
-- 💫 Custom cursor, scroll animations, page transitions
-- 🗂️ Pages: Home, About, Experience, Services, Projects, Education, Contact
-
----
-
-## 🚀 Quick Start
+## Quick start
 
 ```bash
-# Install dependencies
 npm install
-
-# Dev server
-npm run dev
-
-# Production build
-npm run build
-
-# Preview production build
-npm run preview
+npm run dev       # dev server
+npm run build     # production build → dist/
+npm run preview   # preview the build
 ```
 
----
-
-## 📁 Structure
+## Structure
 
 ```
 src/
-├── main.js           # App entry, router setup
-├── App.vue           # Root layout, cursor, scroll-top
-├── style.css         # Global styles + Tailwind directives
-├── components/
-│   ├── Navbar.vue    # Sticky navigation
-│   └── Footer.vue    # Footer with marquee
-└── views/
-    ├── HomeView.vue
-    ├── AboutView.vue
-    ├── ExperienceView.vue
-    ├── ServicesView.vue
-    ├── ProjectsView.vue
-    ├── EducationView.vue
-    └── ContactView.vue
+├── main.js                 # router + v-reveal directive
+├── App.vue                 # shell: ambient background, progress bar, layout
+├── style.css               # theme tokens, glass system, fluid type, tables
+├── composables/useTheme.js # dark/light toggle
+├── components/             # Navbar, Footer, Icon (SVG set), SectionHeading
+├── data/
+│   ├── profile.js          # contact details, nav links, socials
+│   ├── projects.js         # projects, services, process
+│   └── blogs.js            # blog posts (add new posts here)
+└── views/                  # Home, About, Experience, Work, Blog, BlogPost, Contact, 404
 ```
 
----
+## Changing colours
 
-## 🚢 Deploy to GitHub Pages
+All colours are CSS variables in `src/style.css` (`:root[data-theme='dark']` and `[data-theme='light']`) and are mapped to Tailwind tokens in `tailwind.config.js` (`bg-base`, `text-fg`, `text-muted`, `text-accent`, `border-line`, …). Edit them once and the whole site updates.
 
-### Option A — GitHub Actions (Recommended)
-Push to `main` branch — the workflow in `.github/workflows/deploy.yml` auto-builds and deploys.
+## Adding a blog post
 
-> **Enable in GitHub:** Settings → Pages → Source → **GitHub Actions**
+Open `src/data/blogs.js` and add an object to `posts` with a unique `slug`, `title`, `excerpt`, `category`, `icon`, `date`, `readTime`, `tags` and a `blocks` array (`p`, `h2`, `ul`, `ol`, `code`, `callout`, `table`). It appears on the Blog page and Home automatically.
 
-### Option B — Manual
+## Deploy (GitHub Pages)
 
-```bash
-npm run build
-# Then push the dist/ folder to the gh-pages branch
-```
+Push to `main` (or `master`) — `.github/workflows/deploy.yml` builds and deploys.
+Enable once in GitHub: **Settings → Pages → Source → GitHub Actions**.
 
----
-
-## 🛠️ Tech Stack
-
-| Layer | Tech |
-|-------|------|
-| Framework | Vue 3 (Composition API) |
-| Build Tool | Vite 5 |
-| Styling | Tailwind CSS 3 |
-| Routing | Vue Router 4 (hash mode) |
-| Fonts | Playfair Display, DM Sans, JetBrains Mono |
-| Deployment | GitHub Pages via Actions |
-
----
-
-## 📬 Contact
+## Contact
 
 **Parvinder Singh** · [techpinda1214@gmail.com](mailto:techpinda1214@gmail.com) · [GitHub](https://github.com/parvinder204)

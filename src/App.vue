@@ -1,43 +1,30 @@
 <template>
-  <div class="min-h-screen bg-ink text-paper relative">
-    <!-- Custom Cursor -->
-    <div id="custom-cursor" ref="cursor" class="hidden md:block">
-      <div
-        class="w-4 h-4 rounded-full border border-warm-gold fixed pointer-events-none transition-transform duration-150"
-        :style="{ left: cursorX + 'px', top: cursorY + 'px', transform: 'translate(-50%, -50%)' }"
-      />
-      <div
-        class="w-1.5 h-1.5 bg-warm-gold rounded-full fixed pointer-events-none"
-        :style="{ left: dotX + 'px', top: dotY + 'px', transform: 'translate(-50%, -50%)' }"
-      />
+  <div class="relative min-h-screen">
+    <!-- Ambient glass backdrop -->
+    <div class="ambient" aria-hidden="true">
+      <div class="blob animate-blob" style="width:30rem;height:30rem;bottom:-8rem;left:-8rem;background:#ccc5b9;opacity:.28;animation-delay:-8s;" />
     </div>
+    <div class="spotlight" aria-hidden="true" />
 
-    <!-- Navbar -->
+    <!-- Reading / scroll progress -->
+    <div class="fixed top-0 left-0 right-0 h-[3px] z-[60] origin-left bg-accent"
+         :style="{ transform: `scaleX(${progress})` }" aria-hidden="true" />
+
     <Navbar />
 
-    <!-- Page Content -->
     <main>
-      <router-view v-slot="{ Component }">
+      <router-view v-slot="{ Component, route }">
         <transition name="page" mode="out-in">
-          <component :is="Component" />
+          <component :is="Component" :key="route.path" />
         </transition>
       </router-view>
     </main>
 
-    <!-- Footer -->
     <Footer />
 
-    <!-- Scroll to top -->
-    <button
-      v-show="showScrollTop"
-      @click="scrollToTop"
-      class="fixed bottom-8 right-8 z-50 w-10 h-10 bg-warm-gold text-ink flex items-center justify-center 
-             hover:bg-accent-light transition-all duration-300 hover:scale-110 shadow-lg"
-      aria-label="Scroll to top"
-    >
-      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 15l7-7 7 7" />
-      </svg>
+    <button v-show="showTop" @click="toTop" aria-label="Scroll to top"
+            class="btn-icon fixed z-50 glass-strong" style="right:max(1rem,env(safe-area-inset-right));bottom:max(1rem,env(safe-area-inset-bottom));background:var(--glass-strong);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px);">
+      <Icon name="chevron-up" />
     </button>
   </div>
 </template>
@@ -46,64 +33,37 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import Icon from './components/Icon.vue'
 
-const cursorX = ref(0)
-const cursorY = ref(0)
-const dotX = ref(0)
-const dotY = ref(0)
-const showScrollTop = ref(false)
-
-let animFrame = null
-
-const onMouseMove = (e) => {
-  dotX.value = e.clientX
-  dotY.value = e.clientY
-  if (animFrame) cancelAnimationFrame(animFrame)
-  animFrame = requestAnimationFrame(() => {
-    cursorX.value = e.clientX
-    cursorY.value = e.clientY
-  })
-}
+const progress = ref(0)
+const showTop = ref(false)
+let raf = 0
 
 const onScroll = () => {
-  showScrollTop.value = window.scrollY > 500
+  const h = document.documentElement
+  const max = h.scrollHeight - h.clientHeight
+  progress.value = max > 0 ? Math.min(1, window.scrollY / max) : 0
+  showTop.value = window.scrollY > 500
 }
 
-const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' })
+// Cursor-follow spotlight: just updates two CSS variables, no Vue re-renders
+const onMove = (e) => {
+  if (raf) return
+  raf = requestAnimationFrame(() => {
+    raf = 0
+    document.documentElement.style.setProperty('--mx', e.clientX + 'px')
+    document.documentElement.style.setProperty('--my', e.clientY + 'px')
+  })
 }
-
-// Scroll animation observer
-const setupScrollObserver = () => {
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible')
-        }
-      })
-    },
-    { threshold: 0.1 }
-  )
-
-  const observe = () => {
-    document.querySelectorAll('.animate-on-scroll').forEach((el) => observer.observe(el))
-  }
-
-  observe()
-  // Re-observe after route changes
-  const mutationObserver = new MutationObserver(observe)
-  mutationObserver.observe(document.body, { childList: true, subtree: true })
-}
+const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' })
 
 onMounted(() => {
-  window.addEventListener('mousemove', onMouseMove)
   window.addEventListener('scroll', onScroll, { passive: true })
-  setupScrollObserver()
+  window.addEventListener('pointermove', onMove, { passive: true })
+  onScroll()
 })
-
 onUnmounted(() => {
-  window.removeEventListener('mousemove', onMouseMove)
   window.removeEventListener('scroll', onScroll)
+  window.removeEventListener('pointermove', onMove)
 })
 </script>

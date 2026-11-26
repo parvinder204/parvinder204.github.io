@@ -1,133 +1,134 @@
 <template>
-  <div class="pt-24" style="background:#faf9f6;">
-    <section class="section-pad pb-0">
-      <div class="max-w-7xl mx-auto">
-        <p class="section-label animate-on-scroll">Who I Am</p>
-        <h1 class="section-title animate-on-scroll" style="transition-delay:0.1s;">
-          About <em class="not-italic text-gradient-gold">Me.</em>
-        </h1>
+  <div class="pt-28 sm:pt-32">
+    <!-- INTRO -->
+    <section class="section-pad !pt-6">
+      <div class="container-x">
+        <SectionHeading tag="h1" label="Who I am" title="About" accent="me." />
+
+        <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 mt-12 items-start">
+          <div class="lg:col-span-3 space-y-5">
+            <p v-reveal class="lead">
+              I'm <strong>Parvinder Singh</strong>, a Full Stack Developer based in <strong class="text-accent">Mohali, India</strong>,
+              with 2+ years of professional experience building production-grade web applications and AI-powered systems.
+            </p>
+            <p v-reveal="80" class="text-muted leading-relaxed">
+              My work spans the full stack — from architecting <strong class="text-fg">Django/FastAPI microservices</strong> and database
+              schemas to crafting <strong class="text-fg">React and Vue frontends</strong> that users enjoy. I've shipped systems that reduced
+              API latency by <strong class="text-accent">30%</strong>, tripled WhatsApp lead conversions and moved large datasets through Snowflake pipelines.
+            </p>
+            <p v-reveal="140" class="text-muted leading-relaxed">
+              Currently a <strong class="text-fg">Senior Python Developer at Midriff Info Pvt. Ltd.</strong>, leading backend engineering and mentoring
+              junior developers. Previously at <strong class="text-fg">Zestminds Technologies</strong>, shipping AI chatbots, large-scale reporting platforms and GenAI microservices.
+            </p>
+
+            <div v-reveal="200" class="grid grid-cols-2 gap-3 pt-2">
+              <div v-for="f in quickFacts" :key="f.label" class="glass p-4">
+                <p class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">{{ f.label }}</p>
+                <p class="font-semibold text-sm mt-1">{{ f.value }}</p>
+              </div>
+            </div>
+
+            <div v-reveal="260" class="flex flex-wrap gap-3 pt-2">
+              <router-link to="/contact" class="btn btn-primary">Hire me <Icon name="arrow-up-right" size="w-4 h-4" /></router-link>
+              <router-link to="/experience" class="btn btn-glass">View experience <Icon name="arrow-right" size="w-4 h-4" /></router-link>
+            </div>
+          </div>
+
+          <aside v-reveal="120" class="lg:col-span-2 glass glass-pad text-center lg:sticky lg:top-28">
+            <div class="inline-block p-[3px] rounded-full mb-5" style="background:linear-gradient(140deg,#eb5e28,#ccc5b9 55%,#403d39);">
+              <img :src="profile.photo" alt="Parvinder Singh" width="128" height="128" class="block rounded-full object-cover border-4 border-base" style="width:clamp(6.5rem,5rem+5vw,8.5rem);aspect-ratio:1;" />
+            </div>
+            <h2 class="card-title">Parvinder Singh</h2>
+            <p class="font-mono text-xs tracking-[0.2em] text-accent mt-1">FULL STACK DEVELOPER</p>
+            <div class="divider-accent mx-auto my-5" />
+            <ul class="space-y-3 text-sm text-muted text-left max-w-xs mx-auto">
+              <li class="flex items-center gap-3"><Icon name="pin" size="w-4 h-4 text-accent shrink-0" />{{ profile.location }}</li>
+              <li class="flex items-center gap-3"><Icon name="phone" size="w-4 h-4 text-accent shrink-0" />{{ profile.phone }}</li>
+              <li class="flex items-center gap-3 break-all"><Icon name="mail" size="w-4 h-4 text-accent shrink-0" />{{ profile.email }}</li>
+            </ul>
+            <div class="flex justify-center gap-2 mt-6">
+              <a v-for="s in socials" :key="s.label" :href="s.url" :target="s.url.startsWith('http') ? '_blank' : null" rel="noopener" :aria-label="s.label" class="btn-icon"><Icon :name="s.icon" /></a>
+            </div>
+          </aside>
+        </div>
       </div>
     </section>
 
+    <!-- SKILLS -->
     <section class="section-pad">
-      <div class="max-w-7xl mx-auto grid lg:grid-cols-5 gap-16 items-start">
-
-        <div class="lg:col-span-3 space-y-5">
-          <div class="divider-gold animate-on-scroll" />
-          <p class="text-lg leading-relaxed animate-on-scroll" style="transition-delay:0.1s; color:#3d2e0e;">
-            I'm <strong class="font-black" style="color:#1a1208;">Parvinder Singh</strong>, a Full Stack Developer based in
-            <strong class="font-bold" style="color:#b8860b;">Mohali, India</strong>, with 2+ years of professional
-            experience building production-grade web applications and AI-powered systems.
-          </p>
-          <p class="leading-relaxed animate-on-scroll" style="transition-delay:0.2s; color:#3d2e0e; font-size:0.97rem;">
-            My journey spans the full stack — from architecting <strong class="font-bold" style="color:#1a1208;">Django/FastAPI microservices</strong>
-            and database schemas, to crafting <strong class="font-bold" style="color:#1a1208;">React and Vue frontends</strong> that users enjoy.
-            I've shipped systems that reduced API latency by <strong class="font-bold" style="color:#b8860b;">30%</strong>,
-            tripled WhatsApp lead conversions, and processed terabytes through Snowflake pipelines.
-          </p>
-          <p class="leading-relaxed animate-on-scroll" style="transition-delay:0.3s; color:#3d2e0e; font-size:0.97rem;">
-            Currently a <strong class="font-bold" style="color:#1a1208;">Senior Python Developer at Midriff Info Pvt. Ltd.</strong>,
-            leading backend engineering and mentoring junior devs. Previously at
-            <strong class="font-bold" style="color:#1a1208;">Zestminds Technologies</strong>, shipping AI chatbots,
-            large-scale reporting platforms, and GenAI microservices.
-          </p>
-
-          <div class="grid grid-cols-2 gap-4 mt-6 animate-on-scroll" style="transition-delay:0.4s;">
-            <div v-for="fact in quickFacts" :key="fact.label" class="flex items-start gap-3">
-              <span class="font-black mt-0.5" style="color:#b8860b;">→</span>
-              <div>
-                <p class="mono-text text-xs font-bold tracking-wider" style="color:#9c8a6e;">{{ fact.label }}</p>
-                <p class="text-sm font-bold mt-0.5" style="color:#1a1208;">{{ fact.value }}</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-4 mt-6 animate-on-scroll" style="transition-delay:0.5s;">
-            <router-link to="/contact" class="btn-primary">Hire Me</router-link>
-            <router-link to="/experience" class="btn-outline">View Experience</router-link>
-          </div>
-        </div>
-
-        <div class="lg:col-span-2">
-          <div class="card-dark p-8 text-center animate-on-scroll">
-
-            <div class="relative inline-block mb-5">
-              <div class="avatar-ring">
-                <img
-                  v-if="true"
-                  src="/profile.jpg"
-                  alt="Parvinder Singh"
-                  class="avatar-inner w-32 h-32 object-cover"
-                />
-                
-              </div>
-              <div class="absolute bottom-1 right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
-                <div class="w-2 h-2 bg-white rounded-full" />
-              </div>
-            </div>
-
-            <h3 class="display-text text-xl font-bold" style="color:#1a1208;">Parvinder Singh</h3>
-            <p class="mono-text text-xs font-bold tracking-widest mt-1" style="color:#b8860b;">FULL STACK DEVELOPER</p>
-            <div class="divider-gold mx-auto mt-4 mb-5" />
-
-            <div class="space-y-2.5 text-sm" style="color:#6b5e45;">
-              <p class="flex items-center justify-center gap-2 font-medium">
-                <span>📍</span> Mohali, Punjab, India
-              </p>
-              <p class="flex items-center justify-center gap-2 font-medium">
-                <span>📞</span> +91-7807952796
-              </p>
-              <p class="flex items-center justify-center gap-2 font-medium">
-                <span>✉️</span> techpinda1214@gmail.com
-              </p>
-            </div>
-
-            <div class="flex justify-center gap-3 mt-5">
-              <a v-for="s in socials" :key="s.label" :href="s.url" target="_blank" rel="noopener"
-                 :aria-label="s.label"
-                 class="w-9 h-9 border-2 flex items-center justify-center transition-all duration-300 hover:-translate-y-0.5"
-                 style="border-color:rgba(26,18,8,0.12); color:#6b5e45;"
-                 @mouseenter="e => { e.currentTarget.style.borderColor='#b8860b'; e.currentTarget.style.color='#b8860b'; }"
-                 @mouseleave="e => { e.currentTarget.style.borderColor='rgba(26,18,8,0.12)'; e.currentTarget.style.color='#6b5e45'; }">
-                <span v-html="s.icon" class="w-4 h-4" />
-              </a>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section-pad" style="background:#f3efe6;">
-      <div class="max-w-7xl mx-auto">
-        <p class="section-label animate-on-scroll">Technical Arsenal</p>
-        <h2 class="section-title mb-12 animate-on-scroll" style="transition-delay:0.1s;">Skills & Technologies</h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
-          <div v-for="(cat, i) in skillCategories" :key="cat.title"
-               class="card-dark p-6 group animate-on-scroll"
-               :style="{ transitionDelay: (i*0.07)+'s' }">
+      <div class="container-x">
+        <SectionHeading label="Technical arsenal" title="Skills &" accent="technologies." />
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5 mt-12">
+          <article v-for="(c, i) in skillCategories" :key="c.title" v-reveal="(i % 3) * 90" class="glass glass-hover glass-pad">
             <div class="flex items-center gap-3 mb-4">
-              <span class="text-xl">{{ cat.icon }}</span>
-              <h3 class="font-bold group-hover:text-[#b8860b] transition-colors" style="color:#1a1208;">{{ cat.title }}</h3>
+              <span class="icon-tile"><Icon :name="c.icon" size="w-5 h-5" /></span>
+              <h3 class="card-title">{{ c.title }}</h3>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <span v-for="skill in cat.skills" :key="skill" class="skill-pill">{{ skill }}</span>
-            </div>
+            <div class="flex flex-wrap gap-2"><span v-for="s in c.skills" :key="s" class="chip">{{ s }}</span></div>
+          </article>
+        </div>
+
+        <!-- Responsive table -->
+        <div v-reveal class="glass mt-8 overflow-hidden">
+          <div class="px-5 pt-5 pb-2"><h3 class="card-title">Tech at a glance</h3></div>
+          <div class="table-wrap">
+            <table class="data-table stack">
+              <thead><tr><th>Area</th><th>Main tools</th><th>Experience</th></tr></thead>
+              <tbody>
+                <tr v-for="r in glance" :key="r.area">
+                  <td data-label="Area">{{ r.area }}</td>
+                  <td data-label="Main tools" class="text-muted">{{ r.tools }}</td>
+                  <td data-label="Experience"><span class="chip">{{ r.level }}</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 mt-8">
+          <div v-for="(t, i) in interpersonal" :key="t.label" v-reveal="(i % 4) * 70" class="glass glass-hover p-4 sm:p-5 text-center">
+            <Icon :name="t.icon" size="w-6 h-6 mx-auto text-accent mb-3" />
+            <p class="text-sm font-semibold">{{ t.label }}</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section-pad" style="background:#faf9f6;">
-      <div class="max-w-7xl mx-auto">
-        <p class="section-label animate-on-scroll">Beyond Code</p>
-        <h2 class="section-title mb-10 animate-on-scroll" style="transition-delay:0.1s;">Interpersonal Skills</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <div v-for="(t, i) in interpersonal" :key="t.label"
-               class="card-dark p-5 text-center group animate-on-scroll"
-               :style="{ transitionDelay:(i*0.06)+'s' }">
-            <div class="text-2xl mb-3">{{ t.icon }}</div>
-            <p class="text-sm font-bold group-hover:text-[#b8860b] transition-colors" style="color:#3d2e0e;">{{ t.label }}</p>
+    <!-- EDUCATION (merged) -->
+    <section class="section-pad">
+      <div class="container-x">
+        <SectionHeading label="Academic background" title="Education &" accent="learning.">
+          The foundation behind the work, plus what I'm actively studying next.
+        </SectionHeading>
+
+        <div class="grid lg:grid-cols-5 gap-8 lg:gap-12 mt-12">
+          <div class="lg:col-span-3 timeline space-y-5">
+            <article v-for="(e, i) in education" :key="e.degree" v-reveal="i * 80" class="glass glass-hover glass-pad relative">
+              <span class="timeline-dot" />
+              <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                <span class="chip"><Icon name="calendar" size="w-3 h-3" />{{ e.period }}</span>
+                <span class="icon-tile" style="width:2.2rem;border-radius:.7rem;"><Icon name="cap" size="w-4 h-4" /></span>
+              </div>
+              <h3 class="card-title">{{ e.degree }}</h3>
+              <p class="text-sm text-accent font-semibold mt-1">{{ e.institution }} <span class="text-muted font-normal">· {{ e.location }}</span></p>
+              <p class="text-sm text-muted leading-relaxed mt-3">{{ e.desc }}</p>
+              <div v-if="e.tags" class="flex flex-wrap gap-2 mt-4"><span v-for="t in e.tags" :key="t" class="chip">{{ t }}</span></div>
+            </article>
+          </div>
+
+          <div class="lg:col-span-2">
+            <div v-reveal class="glass glass-pad lg:sticky lg:top-28">
+              <p class="section-label mb-5">Currently exploring</p>
+              <ul class="space-y-5">
+                <li v-for="a in learningAreas" :key="a.title" class="flex gap-4">
+                  <span class="icon-tile" style="width:2.4rem;border-radius:.75rem;"><Icon :name="a.icon" size="w-5 h-5" /></span>
+                  <div>
+                    <p class="font-semibold text-sm">{{ a.title }}</p>
+                    <p class="text-xs text-muted leading-relaxed mt-0.5">{{ a.desc }}</p>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -136,38 +137,63 @@
 </template>
 
 <script setup>
+import Icon from '../components/Icon.vue'
+import SectionHeading from '../components/SectionHeading.vue'
+import { profile, socials } from '../data/profile'
+
 const quickFacts = [
-  { label:'CURRENT ROLE',  value:'Senior Python Developer' },
-  { label:'COMPANY',       value:'Midriff Info Pvt. Ltd.' },
-  { label:'EXPERIENCE',    value:'2+ Years Professional' },
-  { label:'EDUCATION',     value:'MCA — Cloud & DevOps' },
-  { label:'LOCATION',      value:'Mohali, Punjab, India' },
-  { label:'AVAILABILITY',  value:'Open to Opportunities' },
+  { label: 'Current role', value: 'Senior Python Developer' },
+  { label: 'Company', value: 'Midriff Info Pvt. Ltd.' },
+  { label: 'Experience', value: '2+ years professional' },
+  { label: 'Education', value: 'MCA — Cloud & DevOps' },
+  { label: 'Location', value: 'Mohali, Punjab, India' },
+  { label: 'Availability', value: 'Open to opportunities' },
 ]
 const skillCategories = [
-  { icon:'🐍', title:'Languages',          skills:['Python','JavaScript','TypeScript','PHP','C'] },
-  { icon:'🛠️', title:'Backend Frameworks', skills:['Django','DRF','FastAPI','Flask','SQLAlchemy','Laravel'] },
-  { icon:'⚛️', title:'Frontend',           skills:['React.js','Next.js','Vue 3','Vite','Tailwind CSS'] },
-  { icon:'☁️', title:'Cloud & DevOps',    skills:['AWS EC2','AWS S3','AWS RDS','AWS SQS','Docker','GitHub Actions','Digital Ocean'] },
-  { icon:'🗄️', title:'Databases',          skills:['PostgreSQL','MySQL','Redis','Snowflake','GCP BigQuery'] },
-  { icon:'🤖', title:'AI & Automation',    skills:['OpenAI API','GPT-4','LangChain','Vision API','Playwright','N8N'] },
-  { icon:'🔌', title:'APIs & Integrations',skills:['REST APIs','Meta WhatsApp API','Odoo CRM','Masspay API','Veriff KYC'] },
-  { icon:'🧰', title:'Tools & Methods',    skills:['Git','Linux','Postman','Jira','Asana','Agile','SDLC','STLC'] },
+  { icon: 'code', title: 'Languages', skills: ['Python', 'JavaScript', 'TypeScript', 'PHP', 'C'] },
+  { icon: 'server', title: 'Backend frameworks', skills: ['Django', 'DRF', 'FastAPI', 'Flask', 'SQLAlchemy', 'Laravel'] },
+  { icon: 'layout', title: 'Frontend', skills: ['React.js', 'Next.js', 'Vue 3', 'Vite', 'Tailwind CSS'] },
+  { icon: 'cloud', title: 'Cloud & DevOps', skills: ['AWS EC2', 'AWS S3', 'AWS RDS', 'AWS SQS', 'Docker', 'GitHub Actions', 'Digital Ocean'] },
+  { icon: 'database', title: 'Databases', skills: ['PostgreSQL', 'MySQL', 'Redis', 'Snowflake', 'GCP BigQuery', 'pgvector', 'Qdrant', 'Neo4j'] },
+  { icon: 'sparkles', title: 'AI & automation', skills: ['OpenAI API', 'GPT-4', 'LangChain', 'Vision API', 'Playwright', 'N8N'] },
+  { icon: 'plug', title: 'APIs & integrations', skills: ['REST APIs', 'Meta WhatsApp API', 'Odoo CRM', 'Masspay API', 'Veriff KYC'] },
+  { icon: 'wrench', title: 'Tools & methods', skills: ['Git', 'Linux', 'Postman', 'Jira', 'Asana', 'Agile', 'SDLC', 'STLC'] },
+]
+const glance = [
+  { area: 'Backend', tools: 'Django, DRF, FastAPI, Flask, Celery', level: 'Core strength' },
+  { area: 'Frontend', tools: 'Vue 3, React, Next.js, Tailwind', level: 'Daily use' },
+  { area: 'Cloud', tools: 'AWS (EC2, S3, RDS, SQS), Docker, GitHub Actions', level: 'Production' },
+  { area: 'Data', tools: 'PostgreSQL, MySQL, Redis, Snowflake, BigQuery, pgvector, Qdrant, Neo4j', level: 'Production' },
+  { area: 'AI / ML', tools: 'OpenAI, LangChain, Vision API, NumPy, scikit-learn', level: 'Building & learning' },
 ]
 const interpersonal = [
-  { icon:'🚀', label:'Initiative Driven' },
-  { icon:'🔍', label:'Analytical Thinking' },
-  { icon:'🧩', label:'Problem Solving' },
-  { icon:'💡', label:'Critical Thinking' },
-  { icon:'🗣️', label:'Communication' },
-  { icon:'👥', label:'Team Leadership' },
-  { icon:'⚡', label:'Multitasking' },
-  { icon:'🎯', label:'Result-Oriented' },
+  { icon: 'zap', label: 'Initiative driven' },
+  { icon: 'search', label: 'Analytical thinking' },
+  { icon: 'layers', label: 'Problem solving' },
+  { icon: 'bulb', label: 'Critical thinking' },
+  { icon: 'send', label: 'Communication' },
+  { icon: 'users', label: 'Team leadership' },
+  { icon: 'list', label: 'Multitasking' },
+  { icon: 'target', label: 'Result-oriented' },
 ]
-const socials = [
-  { label:'GitHub', url:'https://github.com/parvinder204',
-    icon:`<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg>` },
-  { label:'LinkedIn', url:'https://www.linkedin.com/in/parvinder-singh-7651932b2',
-    icon:`<svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>` },
+const education = [
+  { degree: 'Master of Computer Application (MCA)', institution: 'Chandigarh University', location: 'Chandigarh', period: 'Jul 2022 – May 2024',
+    desc: 'Specialised in cloud architecture, DevOps practices and modern software engineering — distributed systems, containerisation and cloud-native development.',
+    tags: ['Cloud Computing', 'DevOps', 'Distributed Systems', 'Docker', 'AWS'] },
+  { degree: 'Bachelor of Science — Computer Science', institution: 'Chandigarh University', location: 'Chandigarh', period: 'Jul 2019 – May 2022',
+    desc: 'Core computer science covering algorithms, data structures, databases, operating systems and software engineering principles.',
+    tags: ['Algorithms', 'Data Structures', 'Databases', 'OS', 'Software Engineering'] },
+  { degree: '12th — Science (Non-Medical)', institution: 'Sri Dasmesh Academy', location: 'Anandpur Sahib, Punjab', period: '2018 – 2019',
+    desc: 'Senior secondary with Physics, Chemistry and Mathematics — building strong analytical foundations.' },
+  { degree: '10th — CBSE', institution: 'Guru Nanak Public School', location: 'Himachal Pradesh', period: '2016 – 2017',
+    desc: 'Secondary education under the CBSE board.' },
+]
+const learningAreas = [
+  { icon: 'sparkles', title: 'AI & LLMs', desc: 'LangChain, RAG architectures and advanced prompt engineering.' },
+  { icon: 'cloud', title: 'Cloud architecture', desc: 'AWS certifications and cloud-native design patterns.' },
+  { icon: 'cpu', title: 'Systems programming', desc: 'Exploring Rust and systems-level performance optimisation.' },
+  { icon: 'chart', title: 'Data engineering', desc: 'Snowflake, BigQuery and modern data pipeline tooling.' },
+  { icon: 'lock', title: 'Security', desc: 'OWASP standards, secure coding and web app security.' },
+  { icon: 'check', title: 'Testing & quality', desc: 'TDD, integration testing and quality automation.' },
 ]
 </script>

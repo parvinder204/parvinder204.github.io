@@ -1,99 +1,80 @@
 <template>
-  <header
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
-    :class="scrolled ? 'bg-white/96 backdrop-blur-md border-b border-black/8 shadow-sm' : 'bg-transparent'"
-  >
-    <nav class="flex items-center justify-between px-6 md:px-12 lg:px-20 xl:px-32 py-4">
+  <header class="fixed inset-x-0 top-0 z-50 px-3 sm:px-5 pt-3">
+    <nav class="glass glass-strong mx-auto max-w-7xl flex items-center justify-between gap-3 transition-all duration-500"
+         :class="scrolled ? 'py-2 px-3 sm:px-4' : 'py-2.5 px-3 sm:px-5'"
+         style="border-radius:9999px;" aria-label="Main navigation">
       <!-- Logo -->
-      <router-link to="/" class="group flex items-center gap-3">
-        <div class="w-10 h-10 border-2 border-[#b8860b] flex items-center justify-center
-                    group-hover:bg-[#b8860b] transition-all duration-300">
-          <span class="display-text text-sm font-black text-[#b8860b] group-hover:text-white transition-colors">PS</span>
-        </div>
-        <div class="hidden sm:block">
-          <p class="font-bold text-sm text-[#1a1208] leading-none">Parvinder Singh</p>
-          <p class="mono-text text-[10px] tracking-widest text-[#b8860b] mt-0.5">FULL STACK DEV</p>
-        </div>
+      <router-link to="/" class="group flex items-center gap-3 min-w-0" aria-label="Parvinder Singh — home">
+        <span class="relative grid place-items-center w-10 h-10 rounded-full font-display font-bold text-sm text-carbon shrink-0"
+              style="background:linear-gradient(135deg,#eb5e28,#ccc5b9);box-shadow:0 6px 18px -6px rgb(var(--c-accent)/.9);">
+          PS
+        </span>
+        <span class="hidden sm:block leading-tight min-w-0">
+          <span class="block font-display font-semibold text-sm truncate">Parvinder Singh</span>
+          <span class="block font-mono text-[0.62rem] tracking-[0.22em] text-accent">FULL STACK DEV</span>
+        </span>
       </router-link>
 
-      <!-- Desktop Nav -->
+      <!-- Desktop links -->
       <ul class="hidden lg:flex items-center gap-1">
         <li v-for="link in navLinks" :key="link.path">
-          <router-link
-            :to="link.path"
-            class="relative px-4 py-2 text-sm font-semibold transition-colors duration-300 group"
-            :class="$route.path === link.path ? 'text-[#b8860b]' : 'text-[#3d2e0e] hover:text-[#b8860b]'"
-          >
+          <router-link :to="link.path"
+            class="relative block px-4 py-2 text-sm font-medium rounded-full transition-colors duration-300"
+            :class="isActive(link) ? 'text-carbon bg-accent' : 'text-muted hover:text-fg hover:bg-fg/5'">
             {{ link.label }}
-            <span class="absolute bottom-0 left-4 right-4 h-0.5 bg-[#b8860b] origin-left transition-transform duration-300"
-                  :class="$route.path === link.path ? 'scale-x-100' : 'scale-x-0 group-hover:scale-x-100'" />
           </router-link>
         </li>
       </ul>
 
-      <!-- CTA + Hamburger -->
-      <div class="flex items-center gap-3">
-        <a href="mailto:techpinda1214@gmail.com"
-           class="hidden md:inline-flex items-center gap-2 px-5 py-2.5 text-xs font-bold tracking-widest mono-text
-                  border-2 border-[#1a1208] text-[#1a1208] bg-transparent
-                  hover:bg-[#1a1208] hover:text-white hover:shadow-[3px_3px_0_#b8860b]
-                  transition-all duration-300 hover:-translate-x-0.5 hover:-translate-y-0.5">
-          HIRE ME
-        </a>
-        <button @click="mobileOpen = !mobileOpen"
-                class="lg:hidden w-8 h-8 flex flex-col gap-1.5 justify-center items-end" aria-label="Toggle menu">
-          <span class="h-0.5 bg-[#1a1208] transition-all duration-300"
-                :class="mobileOpen ? 'w-6 rotate-45 translate-y-[7px]' : 'w-6'" />
-          <span class="h-0.5 bg-[#b8860b] transition-all duration-300"
-                :class="mobileOpen ? 'opacity-0 w-0' : 'w-4'" />
-          <span class="h-0.5 bg-[#1a1208] transition-all duration-300"
-                :class="mobileOpen ? 'w-6 -rotate-45 -translate-y-[7px]' : 'w-6'" />
+      <!-- Actions -->
+      <div class="flex items-center gap-2">
+        <button class="btn-icon" @click="toggleTheme" :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} theme`">
+          <Icon :name="theme === 'dark' ? 'sun' : 'moon'" />
+        </button>
+        <router-link to="/contact" class="btn btn-primary hidden md:inline-flex">
+          Hire me <Icon name="arrow-up-right" size="w-4 h-4" />
+        </router-link>
+        <button class="btn-icon lg:hidden" @click="open = !open" :aria-expanded="open" aria-controls="mobile-menu" aria-label="Toggle menu">
+          <Icon :name="open ? 'x' : 'menu'" />
         </button>
       </div>
     </nav>
 
-    <!-- Mobile Menu -->
+    <!-- Mobile menu -->
     <transition name="slide-down">
-      <div v-if="mobileOpen" class="lg:hidden bg-white border-t border-black/8 shadow-xl px-6 py-6">
-        <ul class="space-y-0 mb-6">
+      <div v-if="open" id="mobile-menu" class="glass glass-strong lg:hidden mx-auto max-w-7xl mt-2 p-3" style="border-radius:1.5rem;">
+        <ul class="grid gap-1">
           <li v-for="link in navLinks" :key="link.path">
-            <router-link :to="link.path" @click="mobileOpen = false"
-              class="flex items-center justify-between py-3.5 text-sm font-semibold border-b border-black/6 transition-colors duration-300"
-              :class="$route.path === link.path ? 'text-[#b8860b]' : 'text-[#1a1208] hover:text-[#b8860b]'">
+            <router-link :to="link.path"
+              class="flex items-center justify-between px-4 py-3 rounded-2xl  font-medium transition-colors"
+              :class="isActive(link) ? 'bg-accent text-carbon' : 'hover:bg-fg/5'">
               {{ link.label }}
-              <svg class="w-3.5 h-3.5 opacity-40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7" />
-              </svg>
+              <Icon name="arrow-right" size="w-4 h-4" />
             </router-link>
           </li>
         </ul>
-        <a href="mailto:techpinda1214@gmail.com"
-           class="block w-full py-3.5 text-center bg-[#1a1208] text-white font-bold text-sm tracking-widest hover:bg-[#b8860b] transition-colors duration-300">
-          HIRE ME →
-        </a>
+        <router-link to="/contact" class="btn btn-primary w-full mt-3">Hire me <Icon name="arrow-up-right" size="w-4 h-4" /></router-link>
       </div>
     </transition>
   </header>
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, watch, onMounted, onUnmounted } from 'vue'
+import { useRoute } from 'vue-router'
+import Icon from './Icon.vue'
+import { useTheme } from '../composables/useTheme'
+import { navLinks } from '../data/profile'
+
+const route = useRoute()
+const { theme, toggleTheme } = useTheme()
+const open = ref(false)
 const scrolled = ref(false)
-const mobileOpen = ref(false)
-const navLinks = [
-  { path: '/', label: 'Home' },
-  { path: '/about', label: 'About' },
-  { path: '/experience', label: 'Experience' },
-  { path: '/services', label: 'Services' },
-  { path: '/projects', label: 'Projects' },
-  { path: '/education', label: 'Education' },
-  { path: '/contact', label: 'Contact' },
-]
-const handleScroll = () => { scrolled.value = window.scrollY > 50 }
-onMounted(() => window.addEventListener('scroll', handleScroll, { passive: true }))
-onUnmounted(() => window.removeEventListener('scroll', handleScroll))
+
+const isActive = (link) => (link.path === '/' ? route.path === '/' : route.path.startsWith(link.path))
+const onScroll = () => { scrolled.value = window.scrollY > 40 }
+
+watch(() => route.path, () => { open.value = false })
+onMounted(() => { window.addEventListener('scroll', onScroll, { passive: true }); onScroll() })
+onUnmounted(() => window.removeEventListener('scroll', onScroll))
 </script>
-<style scoped>
-.slide-down-enter-active,.slide-down-leave-active{transition:opacity .3s ease,transform .3s ease}
-.slide-down-enter-from,.slide-down-leave-to{opacity:0;transform:translateY(-8px)}
-</style>
