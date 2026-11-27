@@ -4,7 +4,6 @@
     <div ref="ring" class="cursor-pos">
       <div class="cursor-scale" :class="{ 'is-hover': hover, 'is-down': down, 'is-hidden': hidden }">
         <span class="cursor-spin" />
-        <svg class="cursor-arrow" :class="{ show: arrow }" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M7 7h10v10" /></svg>
       </div>
     </div>
     <!-- precise dot -->
@@ -19,7 +18,6 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const enabled = ref(false)
 const hover = ref(false)
-const arrow = ref(false)
 const down = ref(false)
 const hidden = ref(true)
 const ring = ref(null)
@@ -46,7 +44,6 @@ const onMove = (e) => {
   hidden.value = isText // keep the native I-beam while typing
   const target = t.closest?.(HOVER_SEL)
   hover.value = !!target && !isText
-  arrow.value = !!t.closest?.('a, .glass-hover')
 }
 const onDown = (e) => {
   down.value = true
@@ -93,47 +90,44 @@ html.custom-cursor input, html.custom-cursor textarea, html.custom-cursor [conte
 
 /* Ring */
 .cursor-scale {
-  position: absolute; left: -1.3rem; top: -1.3rem; width: 2.6rem; height: 2.6rem; border-radius: 9999px;
+  position: absolute; left: -.7rem; top: -.7rem; width: 1.4rem; height: 1.4rem; border-radius: 9999px;
   display: grid; place-items: center;
   transition: transform .35s cubic-bezier(.2,.8,.2,1), background-color .3s, box-shadow .3s, opacity .25s;
 }
 .cursor-spin {
   position: absolute; inset: 0; border-radius: 9999px;
-  border: 1.5px dashed rgb(var(--c-accent)); opacity: .85;
+  border: 1.5px dashed rgb(var(--c-accent)); opacity: .8;
   animation: cursorSpin 9s linear infinite;
   transition: border-color .3s, opacity .3s;
 }
 .cursor-scale.is-hover {
-  transform: scale(1.75);
-  background: rgb(var(--c-accent) / 0.14);
-  -webkit-backdrop-filter: blur(6px) saturate(160%); backdrop-filter: blur(6px) saturate(160%);
-  box-shadow: 0 0 28px rgb(var(--c-accent) / 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  transform: scale(1.45);               /* ≈ 2rem: a gentle halo, never a big blob */
+  background: rgb(var(--c-accent) / 0.08); /* no blur → text underneath stays fully readable */
+  box-shadow: 0 0 14px rgb(var(--c-accent) / 0.35);
 }
 .cursor-scale.is-hover .cursor-spin { border-style: solid; border-color: rgb(var(--c-accent) / 0.7); animation-duration: 4s; }
-.cursor-scale.is-down { transform: scale(0.78); }
-.cursor-scale.is-hover.is-down { transform: scale(1.4); }
+.cursor-scale.is-down { transform: scale(0.8); }
+.cursor-scale.is-hover.is-down { transform: scale(1.15); }
 .cursor-scale.is-hidden { opacity: 0; }
 
-.cursor-arrow { width: .75rem; height: .75rem; color: rgb(var(--c-accent)); opacity: 0; transform: scale(.4) rotate(-20deg); transition: opacity .25s, transform .3s cubic-bezier(.2,.8,.2,1); }
-.cursor-arrow.show { opacity: 1; transform: none; }
 
 /* Dot */
 .cursor-dot {
-  position: absolute; left: -.2rem; top: -.2rem; width: .4rem; height: .4rem; border-radius: 9999px;
-  background: rgb(var(--c-accent)); box-shadow: 0 0 10px rgb(var(--c-accent) / 0.9);
+  position: absolute; left: -.15rem; top: -.15rem; width: .3rem; height: .3rem; border-radius: 9999px;
+  background: rgb(var(--c-accent)); box-shadow: 0 0 8px rgb(var(--c-accent) / 0.9);
   transition: transform .25s cubic-bezier(.2,.8,.2,1), opacity .2s;
 }
-.cursor-dot.is-hover { transform: scale(0); }
-.cursor-dot.is-down { transform: scale(2.2); }
+.cursor-dot.is-hover { transform: scale(1.3); }
+.cursor-dot.is-down { transform: scale(1.8); }
 .cursor-dot.is-hidden { opacity: 0; }
 
 /* Click ripple (spawned from JS on <body>) */
 .cursor-ripple {
-  position: fixed; z-index: 9998; width: 1rem; height: 1rem; margin: -.5rem 0 0 -.5rem; border-radius: 9999px; pointer-events: none;
-  border: 2px solid rgb(var(--c-accent)); animation: cursorRipple .65s cubic-bezier(.2,.7,.2,1) forwards;
+  position: fixed; z-index: 9998; width: .8rem; height: .8rem; margin: -.4rem 0 0 -.4rem; border-radius: 9999px; pointer-events: none;
+  border: 1.5px solid rgb(var(--c-accent)); animation: cursorRipple .65s cubic-bezier(.2,.7,.2,1) forwards;
 }
 @keyframes cursorSpin { to { transform: rotate(360deg); } }
-@keyframes cursorRipple { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(4.5); } }
+@keyframes cursorRipple { from { opacity: .9; transform: scale(.4); } to { opacity: 0; transform: scale(3); } }
 
 @media (prefers-reduced-motion: reduce) {
   .cursor-spin { animation: none; }
