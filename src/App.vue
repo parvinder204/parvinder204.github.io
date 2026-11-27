@@ -11,6 +11,7 @@
          :style="{ transform: `scaleX(${progress})` }" aria-hidden="true" />
 
     <Navbar />
+    <Cursor />
 
     <main>
       <router-view v-slot="{ Component, route }">
@@ -33,6 +34,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import Cursor from './components/Cursor.vue'
 import Icon from './components/Icon.vue'
 
 const progress = ref(0)

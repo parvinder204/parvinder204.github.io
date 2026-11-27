@@ -64,14 +64,7 @@
                 </div>
                 <div>
                   <label for="c-budget" class="field-label">Budget (optional)</label>
-                  <select id="c-budget" v-model="form.budget" class="field">
-                    <option value="">Select project budget…</option>
-                    <option>Under ₹50,000</option>
-                    <option>₹50,000 – ₹2,00,000</option>
-                    <option>₹2,00,000 – ₹5,00,000</option>
-                    <option>₹5,00,000+</option>
-                    <option>Full-time role</option>
-                  </select>
+                  <CustomSelect id="c-budget" v-model="form.budget" :options="budgets" placeholder="Select project budget…" />
                 </div>
               </div>
 
@@ -101,11 +94,13 @@ import { ref, reactive } from 'vue'
 import emailjs from 'emailjs-com'
 import Icon from '../components/Icon.vue'
 import SectionHeading from '../components/SectionHeading.vue'
+import CustomSelect from '../components/CustomSelect.vue'
 import { profile, socials } from '../data/profile'
 
 const form = reactive({ name: '', email: '', subject: '', budget: '', message: '', website: '' })
 const errors = reactive({ name: '', email: '', message: '' })
 const status = reactive({ type: '', text: '' })
+const budgets = ['Under ₹50,000', '₹50,000 – ₹2,00,000', '₹2,00,000 – ₹5,00,000', '₹5,00,000+', 'Full-time role']
 const submitting = ref(false)
 const submitted = ref(false)
 let lastSubmittedAt = 0
