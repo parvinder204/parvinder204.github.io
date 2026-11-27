@@ -3,11 +3,11 @@ export const projectFilters = ['All', 'AI/ML', 'Backend', 'Full Stack']
 // kind: label shown on the card footer. private:false = personal project (no lock icon).
 // featured: true → shown on the Home page.
 export const projects = [
-  { icon: 'bot', title: 'AI WhatsApp Chatbot', category: 'AI/ML', year: '2024', featured: true,
+  { icon: 'bot', title: 'AI WhatsApp Chatbot', category: 'AI/ML', featured: true,
     desc: 'GPT-4 + Vision API + OpenCV chatbot integrated with Odoo CRM via the Meta WhatsApp API. Dramatic improvements in lead conversion.',
     tech: ['GPT-4', 'Vision API', 'OpenCV', 'Django', 'Meta API', 'Odoo CRM', 'MySQL'], github: null },
 
-  { icon: 'sparkles', title: 'GenhanceAI Platform', category: 'AI/ML', year: '2025', featured: true,
+  { icon: 'sparkles', title: 'GenhanceAI Platform', category: 'AI/ML', featured: true,
     desc: 'GenAI content optimisation engine — Flask microservices on AWS (S3, SQS, EC2) with NextAuth and the Perplexity API.',
     tech: ['Flask', 'OpenAI', 'Perplexity API', 'Playwright', 'Next.js', 'AWS S3', 'SQS'], github: null },
 
@@ -35,7 +35,7 @@ export const projects = [
     desc: 'Automated data pipeline: S3 ingestion → cleaning → validation → Snowflake loading via FastAPI async microservices.',
     tech: ['FastAPI', 'AWS S3', 'Snowflake', 'Python', 'Async'], github: null },
 
-  { icon: 'pin', title: 'Vlocator', category: 'Full Stack', year: '2026',
+  { icon: 'pin', title: 'Vlocator', category: 'Full Stack',
     desc: 'Vegan restaurant discovery with Playwright scraping, Celery tasks, a Vue.js frontend and a PostgreSQL backend.',
     tech: ['Django', 'Celery', 'Playwright', 'Vue.js', 'PostgreSQL'], github: null },
 

@@ -11,19 +11,11 @@
     </div>
 
     <div class="container-x">
-      <div class="glass glass-pad grid gap-8 md:grid-cols-3 items-start">
+      <div class="glass glass-pad grid gap-8 md:grid-cols-2 items-center">
         <div>
           <p class="font-display font-bold text-2xl">Parvinder <span class="gradient-text">Singh</span></p>
           <p class="text-muted text-sm mt-2 max-w-xs">Full Stack Developer building scalable backends, AI-powered products and cloud-native systems.</p>
         </div>
-
-        <ul class="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
-          <li v-for="l in navLinks" :key="l.path">
-            <router-link :to="l.path" class="text-muted hover:text-accent transition-colors inline-flex items-center gap-1.5">
-              <Icon name="arrow-right" size="w-3 h-3" /> {{ l.label }}
-            </router-link>
-          </li>
-        </ul>
 
         <div class="md:text-right">
           <p class="section-label mb-3">Let's connect</p>
@@ -31,12 +23,11 @@
             <a v-for="s in socials" :key="s.label" :href="s.url" :target="s.url.startsWith('http') ? '_blank' : null"
                rel="noopener" :aria-label="s.label" class="btn-icon"><Icon :name="s.icon" /></a>
           </div>
-          <a :href="`mailto:${profile.email}`" class="inline-block mt-4 text-sm text-muted hover:text-accent transition-colors break-all">{{ profile.email }}</a>
         </div>
       </div>
 
       <p class="text-center text-muted text-xs font-mono mt-6">
-        © {{ new Date().getFullYear() }} Parvinder Singh
+        © {{ new Date().getFullYear() }} Parvinder Singh · Built with Vue 3, Vite &amp; Tailwind
       </p>
     </div>
   </footer>
@@ -44,5 +35,5 @@
 
 <script setup>
 import Icon from './Icon.vue'
-import { navLinks, socials, techs, profile } from '../data/profile'
+import { socials, techs } from '../data/profile'
 </script>

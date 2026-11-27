@@ -52,9 +52,12 @@ const experience = [
       'Managing server deployment and maintenance on AWS and Digital Ocean infrastructure.',
       'Building microservices with Django, FastAPI and Flask; frontend with Vue.js and React.',
       'Optimising API performance through query tuning, caching strategies and profiling.',
+      'Building AI features end to end: LLM tool-calling agents and Retrieval-Augmented Generation (RAG) pipelines over company knowledge bases.',
+      'Working with vector databases (Qdrant and pgvector) for embedding storage and semantic similarity search.',
+      'Integrating Deepgram for real-time speech-to-text and text-to-speech in voice-enabled AI assistants.',
       'Leading the backend engineering team, conducting code reviews and mentoring trainees.',
     ],
-    tech: ['Django', 'DRF', 'FastAPI', 'Flask', 'Vue.js', 'React', 'JWT', 'AWS', 'Digital Ocean'],
+    tech: ['Django', 'DRF', 'FastAPI', 'Flask', 'Vue.js', 'React', 'JWT', 'AWS', 'Digital Ocean', 'AI / LLMs', 'RAG', 'Qdrant', 'pgvector', 'Deepgram'],
   },
   {
     role: 'Software Development Engineer', company: 'Zestminds Technologies Pvt. Ltd.', location: 'Mohali, India', period: 'Jul 2024 – Jan 2026',
