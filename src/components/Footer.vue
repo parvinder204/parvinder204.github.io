@@ -27,7 +27,7 @@
       </div>
 
       <p class="text-center text-muted text-xs font-mono mt-6">
-        © {{ new Date().getFullYear() }} Parvinder Singh · Built with Vue 3, Vite &amp; Tailwind
+        © {{ new Date().getFullYear() }} Parvinder Singh
       </p>
     </div>
   </footer>
