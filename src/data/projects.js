@@ -37,7 +37,7 @@ export const projects = [
 
   { icon: 'pin', title: 'Vlocator', category: 'Full Stack',
     desc: 'Vegan restaurant discovery with Playwright scraping, Celery tasks, a Vue.js frontend and a PostgreSQL backend.',
-    tech: ['Django', 'Celery', 'Playwright', 'Vue.js', 'PostgreSQL'], github: null },
+    tech: ['Django', 'Celery', 'Playwright', 'Vue.js', 'PostgreSQL', 'Digital Ocean'], github: null },
 
   { icon: 'calendar', title: 'Engagement Celebration', category: 'Full Stack',
     desc: 'Real-time vendor/couple event platform with WebSocket live features, Celery tasks and PostgreSQL.',
@@ -46,11 +46,11 @@ export const projects = [
 
 export const services = [
   { icon: 'terminal', title: 'Python Backend', desc: 'Production-grade APIs and microservices with Django, FastAPI and Flask.',
-    items: ['Django REST Framework APIs', 'FastAPI async microservices', 'ORM & query optimisation', 'JWT / OAuth / session auth', 'Celery task queues'] },
+    items: ['Django REST Framework APIs', 'FastAPI async microservices', 'ORM & query optimisation', 'JWT / OAuth / session auth', 'Celery task queues', 'Scrapping'] },
   { icon: 'layout', title: 'Full Stack Web Apps', desc: 'Modern, responsive web applications from database to polished UI.',
     items: ['React.js / Next.js / Vue 3', 'SPA + SSR architectures', 'REST & GraphQL integration', 'Pinia / Redux state management', 'Tailwind responsive design'] },
   { icon: 'cloud', title: 'Cloud & DevOps', desc: 'Deploy, scale and monitor on AWS and Digital Ocean.',
-    items: ['AWS EC2 / S3 / RDS / SQS', 'Docker containerisation', 'GitHub Actions CI/CD', 'Server configuration & maintenance', 'Performance monitoring'] },
+    items: ['AWS EC2 / S3 / RDS / SQS', 'Digital Ocean', 'Hostinger','Docker containerisation', 'GitHub Actions CI/CD', 'Server configuration & maintenance', 'Performance monitoring'] },
   { icon: 'sparkles', title: 'AI & Automation', desc: 'Integrate cutting-edge AI into your products and automate workflows.',
     items: ['OpenAI GPT-4 integration', 'RAG pipelines (LangChain, pgvector, Qdrant)', 'WhatsApp / CRM AI chatbots', 'Browser automation (Playwright)', 'N8N workflow automation'] },
   { icon: 'database', title: 'Database Engineering', desc: 'Design, optimise and scale your data layer for performance.',
